@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+
+use App\Http\Resources\OrderResource;
 use Illuminate\Http\Request;
 use App\Models\Order;
 
@@ -18,16 +21,6 @@ class OrderController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -35,7 +28,24 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        /******CRIAR CUSTOMER (POST)*****/
+        $newOrder = new Order();
+        $newOrder->status = $request->order["status"];
+        $newOrder->ticket_number = $request->order["ticket_number"];
+        $newOrder->customer_id = $request->order["customer_id"];
+        $newOrder->total_price = $request->order["total_price"];
+        $newOrder->total_paid = $request->order["total_paid"];
+        $newOrder->total_paid_with_points = $request->order["total_paid_with_points"];
+        $newOrder->points_gained = $request->order["points_gained"];
+        $newOrder->points_used_to_pay = $request->order["points_used_to_pay"];
+        $newOrder->payment_type = $request->order["payment_type"];
+        $newOrder->payment_reference = $request->order["payment_reference"];
+        $newOrder->date = $request->order["date"];
+        $newOrder->delivered_by = $request->order["delivered_by"];
+
+        $newOrder->save();
+
+        return $newOrder;
     }
 
     /**
@@ -44,20 +54,9 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Order $order)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return new OrderResource($order);
     }
 
     /**
@@ -69,7 +68,20 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        /****MODIFICAR VALOR****/
+        $existingOrder = Order::find( $id );
+
+        //VERIFICAMOS SE O PRODUTO EXISTE E MODAMOS O VALOR DO PRECO
+        //EXISTE
+        if( $existingOrder ){
+            $existingOrder->status = $request->product['status'];
+            //carbon set the date and time
+            $existingOrder->updated_at = Carbon::now();
+            $existingOrder->save();
+            return $existingOrder;
+        }
+        //NAO EXISTE
+        return "Order not found";
     }
 
     /**

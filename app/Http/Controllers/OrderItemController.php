@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\OrderResource;
 use Illuminate\Http\Request;
 use App\Models\OrderItem;
+use App\Models\Order;
 
 class OrderItemController extends Controller
 {
@@ -15,16 +17,6 @@ class OrderItemController extends Controller
     public function index()
     {
         return OrderItem::orderBy('price', 'DESC')->get();
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -44,9 +36,10 @@ class OrderItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Order $orderItem)
     {
-        //
+        $existingOrderItem = OrderItem::orderBy('order_id', 'ASC')->get();
+        return $existingOrderItem;
     }
 
     /**

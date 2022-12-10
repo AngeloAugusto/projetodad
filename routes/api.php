@@ -30,6 +30,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/users', [UserController::class, 'index']);
 Route::prefix('/user')->group(function (){
         Route::post('/store', [UserController::class, 'store']);
+        Route::get('/{user}', [UserController::class, 'show']);
         Route::put('/{id}', [UserController::class, 'update']);
         Route::delete('/{id}', [UserController::class, 'destroy']);
     }
@@ -39,6 +40,7 @@ Route::prefix('/user')->group(function (){
 Route::get('/customers', [CustomerController::class, 'index']);
 Route::prefix('/customer')->group(function (){
         Route::post('/store', [CustomerController::class, 'store']);
+        Route::get('/{customer}', [CustomerController::class, 'show']);
         Route::put('/{id}', [CustomerController::class, 'update']);
         Route::delete('/{id}', [CustomerController::class, 'destroy']);
     }
@@ -48,6 +50,7 @@ Route::prefix('/customer')->group(function (){
 Route::get('/products', [ProductController::class, 'index']);
 Route::prefix('/product')->group(function (){
         Route::post('/store', [ProductController::class, 'store']);
+        Route::get('/{product}', [ProductController::class, 'show']);
         Route::put('/{id}', [ProductController::class, 'update']);
         Route::delete('/{id}', [ProductController::class, 'destroy']);
     }
@@ -57,6 +60,7 @@ Route::prefix('/product')->group(function (){
 Route::get('/orders', [OrderController::class, 'index']);
 Route::prefix('/order')->group(function (){
         Route::post('/store', [OrderController::class, 'store']);
+        Route::get('/{order}', [OrderController::class, 'show']);
         Route::put('/{id}', [OrderController::class, 'update']);
         Route::delete('/{id}', [OrderController::class, 'destroy']);
     }
@@ -66,6 +70,7 @@ Route::prefix('/order')->group(function (){
 Route::get('/orderItems', [OrderItemController::class, 'index']);
 Route::prefix('/orderItem')->group(function (){
         Route::post('/store', [OrderItemController::class, 'store']);
+        Route::get('/{orderItem}', [OrderItemController::class, 'show']);
         Route::put('/{id}', [OrderItemController::class, 'update']);
         Route::delete('/{id}', [OrderItemController::class, 'destroy']);
     }
