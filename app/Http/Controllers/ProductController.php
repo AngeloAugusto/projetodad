@@ -17,7 +17,7 @@ class ProductController extends Controller
     public function index()
     {
         /******RECEBER USER (GET)*****/
-        return Product::orderBy('created_at', 'DESC')->get();
+        return Product::orderBy('name', 'ASC')->get();
     }
 
     /**

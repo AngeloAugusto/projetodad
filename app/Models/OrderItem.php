@@ -18,4 +18,9 @@ class OrderItem extends Model
     {
         return $this->hasMany(Order::class);
     }
+
+    public function delivered_by()
+    {
+        return $this->belongsTo(User::class, 'delivered_by');
+    }
 }
